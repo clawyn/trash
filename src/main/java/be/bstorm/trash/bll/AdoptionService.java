@@ -10,4 +10,7 @@ public interface AdoptionService {
     List<Adoption> findAll();
     void update(Long id, Adoption adoption);
     void deleteById(Long id);
+    List<Adoption> getPendingAdoption();
+    void approveAdoption(Long id);
+    void rejectAdoption(Long id);
 }

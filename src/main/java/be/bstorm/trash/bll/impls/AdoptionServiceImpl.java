@@ -3,6 +3,7 @@ package be.bstorm.trash.bll.impls;
 import be.bstorm.trash.bll.AdoptionService;
 import be.bstorm.trash.dal.repositories.AdoptionRepository;
 import be.bstorm.trash.dl.entities.Adoption;
+import be.bstorm.trash.dl.enums.AdoptionStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +54,24 @@ public class AdoptionServiceImpl implements AdoptionService {
         }
         adoptionRepository.deleteById(id);
 
+    }
+
+    @Override
+    public List<Adoption> getPendingAdoption() {
+        return adoptionRepository.findByStatus(AdoptionStatus.PENDING);
+    }
+
+    @Override
+    public void approveAdoption(Long id) {
+        Adoption adoption = findById(id);
+        adoption.setStatus(AdoptionStatus.APPROVED);
+        adoptionRepository.save(adoption);
+    }
+
+    @Override
+    public void rejectAdoption(Long id) {
+        Adoption adoption = findById(id);
+        adoption.setStatus(AdoptionStatus.REJECTED);
+        adoptionRepository.save(adoption);
     }
 }
