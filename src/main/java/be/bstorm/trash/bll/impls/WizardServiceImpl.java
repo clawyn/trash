@@ -46,7 +46,7 @@ public class WizardServiceImpl implements WizardService {
         existingWizard.setEmail(wizard.getEmail());
         existingWizard.setShelterRole(wizard.getShelterRole());
         existingWizard.setAdoptions(wizard.getAdoptions());
-        existingWizard.setHouse(wizard.getHouse());
+        existingWizard.setWizardHouse(wizard.getWizardHouse());
         wizardRepository.save(existingWizard);
     }
 

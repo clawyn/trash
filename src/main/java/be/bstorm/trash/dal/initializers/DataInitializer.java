@@ -7,8 +7,11 @@ import be.bstorm.trash.dal.repositories.WizardRepository;
 import be.bstorm.trash.dl.entities.Adoption;
 import be.bstorm.trash.dl.entities.Beast;
 import be.bstorm.trash.dl.entities.Capability;
+import be.bstorm.trash.dl.entities.Wizard;
 import be.bstorm.trash.dl.enums.AdoptionStatus;
 import be.bstorm.trash.dl.enums.DangerLevel;
+import be.bstorm.trash.dl.enums.ShelterRole;
+import be.bstorm.trash.dl.enums.WizardHouse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -33,7 +36,8 @@ public class DataInitializer implements CommandLineRunner {
 
     public void saveDefaultWizards() {
         if (wizardRepository.count() == 0) {
-            // wizardRepository.saveAll(List.of());
+            Wizard wizard = new Wizard("albus wilfred percival brian", "Dumbledore", "dumby@gmail.mag", ShelterRole.ADMIN, WizardHouse.GRYFFINDOR);
+            wizardRepository.save(wizard);
         }
     }
 
