@@ -16,14 +16,6 @@ public class ShelterServiceImpl implements ShelterService {
 
     private final ShelterRepository shelterRepository;
 
-    @Override
-    public Shelter save (Shelter shelter) {
-        if (shelterRepository.existsById(shelter.getId())){
-            throw new RuntimeException("id already exists");
-        }
-        shelterRepository.save(shelter);
-        return shelter;
-    }
 
     @Override
     public Shelter findById(Long id) {
@@ -47,12 +39,4 @@ public class ShelterServiceImpl implements ShelterService {
         shelterRepository.save(existingShelter);
     }
 
-    @Override
-    public void deleteById(Long id) {
-        if (!shelterRepository.existsById(id)){
-            throw new RuntimeException("id not found");
-        }
-        shelterRepository.deleteById(id);
-
-    }
 }
