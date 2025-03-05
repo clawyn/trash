@@ -1,6 +1,7 @@
 package be.bstorm.trash.bll.impls;
 
 import be.bstorm.trash.bll.ShelterService;
+import be.bstorm.trash.bll.exceptions.ShelterNotFoundException;
 import be.bstorm.trash.dal.repositories.ShelterRepository;
 import be.bstorm.trash.dl.entities.Adoption;
 import be.bstorm.trash.dl.entities.Shelter;
@@ -20,7 +21,7 @@ public class ShelterServiceImpl implements ShelterService {
     @Override
     public Shelter findById(Long id) {
         return shelterRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("id not found")
+                () -> new ShelterNotFoundException("Shelter with id " + id + " not found")
         );
     }
 
@@ -32,7 +33,7 @@ public class ShelterServiceImpl implements ShelterService {
     @Override
     public void update(Long id, Shelter shelter) {
         Shelter existingShelter = shelterRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("id not found")
+                () -> new ShelterNotFoundException("Shelter with id " + id + " not found")
         );
         existingShelter.setName(shelter.getName());
         existingShelter.setDescription(shelter.getDescription());
