@@ -5,6 +5,8 @@ import be.bstorm.trash.bll.StaffService;
 import be.bstorm.trash.dal.repositories.WizardRepository;
 import be.bstorm.trash.dl.entities.Wizard;
 import be.bstorm.trash.dl.enums.ShelterRole;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,16 +15,18 @@ import java.util.stream.Collectors;
 
 
 @Service
+@RequiredArgsConstructor
 public class StaffServiceImpl implements StaffService {
     private WizardRepository wizardRepository;
 
+    @Autowired
+    public StaffServiceImpl(WizardRepository wizardRepository) {
+        this.wizardRepository = wizardRepository;
+    }
     @Override
-    public Wizard CreateWizard(Wizard wizard, ShelterRole role) {
-        if (wizardRepository.existsById(wizard.getId())) {
-            if (role == wizard.getShelterRole()) {
-                wizard.setShelterRole(role);
-            }
-        }
+    public Wizard createStaff(Wizard wizard) {
+        wizard.setShelterRole(ShelterRole.STAFF);
+        wizardRepository.save(wizard);
         return wizard;
     }
 
@@ -39,8 +43,18 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public void updateStaff(Long id, Wizard wizard, ShelterRole role) {
-
+    public void updateStaff(Long id, Wizard wizard) {
+        Wizard existingWizard = wizardRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("id not found")
+        );
+        existingWizard.setFirstName(wizard.getFirstName());
+        existingWizard.setLastName(wizard.getLastName());
+        existingWizard.setPassword(wizard.getPassword());
+        existingWizard.setEmail(wizard.getEmail());
+        existingWizard.setShelterRole(wizard.getShelterRole());
+        existingWizard.setAdoptions(wizard.getAdoptions());
+        existingWizard.setWizardHouse(wizard.getWizardHouse());
+        wizardRepository.save(existingWizard);
     }
 
     @Override
